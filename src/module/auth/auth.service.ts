@@ -18,7 +18,7 @@ export class AuthService {
         if (!isMatch) {
             throw new BadRequestException("Invalid credentials");
         }
-        const payload = { email: user.email, sub: user.id };
+        const payload = { email: user.email, sub: user.id, role: user.role };
         return {
             access_token: this.jwtService.sign(payload),
         };
@@ -34,7 +34,7 @@ export class AuthService {
             ...CreateUserDto,
             password: hashPassword,
         });
-        const payload = { email: user.email, sub: user.id };
+        const payload = { email: user.email, sub: user.id, role: user.role };
         return {
             access_token: this.jwtService.sign(payload),
         }

@@ -4,7 +4,6 @@ import { ApiBody, ApiTags } from "@nestjs/swagger";
 import { AuthService } from "./auth.service";
 import { CreateUserDto } from "../user/dto/create-user.dto";
 import { SignInUserDto } from "./dto/signin-user.dto";
-import { Sign } from "crypto";
 
 @ApiTags("auth")
 @Controller("auth")

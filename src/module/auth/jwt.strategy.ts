@@ -3,6 +3,7 @@ import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { UserService } from "../user/user.service";
 import { ConfigService } from "@nestjs/config";
+import { UserInformationDto } from "../user/dto/user-information.dto";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -20,8 +21,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         if(!user || !user.isActive) {
             throw new UnauthorizedException("User not found or inactive");
         }
-
-        const { password, ...result } = user;
-        return result;
+        return new UserInformationDto({
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            role: user.role,
+        });
     }
 }
