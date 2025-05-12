@@ -3,6 +3,8 @@ import { ApiBody, ApiTags } from "@nestjs/swagger";
 
 import { AuthService } from "./auth.service";
 import { CreateUserDto } from "../user/dto/create-user.dto";
+import { SignInUserDto } from "./dto/signin-user.dto";
+import { Sign } from "crypto";
 
 @ApiTags("auth")
 @Controller("auth")
@@ -13,5 +15,11 @@ export class AuthController {
     @ApiBody({ type: CreateUserDto })
     async signUp(@Body() createUserDto: CreateUserDto) {
         return this.authService.signUp(createUserDto);
+    }
+
+    @Post('signin')
+    @ApiBody({ type: SignInUserDto })
+    async signIn(@Body() signInUserDto: SignInUserDto) {
+        return this.authService.signIn(signInUserDto.email, signInUserDto.password);
     }
 }

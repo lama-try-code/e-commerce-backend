@@ -1,22 +1,26 @@
-import { Controller, Get, Param } from "@nestjs/common";
+import { Controller, Get, Param, UseGuards, Request } from "@nestjs/common";
 import { UserService } from "./user.service";
-import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { User } from "../database/postgres/entities/user.entity";
 import { UUID } from "crypto";
+import { JwtAuthGuard } from "../auth/jwt.guard";
 
 @ApiTags('Users')
 @Controller('users')
 
 export class UserController {
-    constructor(private readonly userService: UserService) {}
+    constructor(private readonly userService: UserService) { }
 
     @Get()
     async getAllUser(): Promise<User[]> {
         return this.userService.getAllUser();
     }
 
-    @Get(':id')
-    async getUserById(@Param('id') id: UUID): Promise<User | null> {
-        return this.userService.getUserById(id);
+    @Get('profile')
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth('JWT') 
+    getMe(@Request() req) {
+        console.log('User in request:', req.user); 
+        return req.user;
     }
 }
