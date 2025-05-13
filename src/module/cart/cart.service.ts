@@ -1,13 +1,12 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { Cart } from "../database/mongo/schema/cart.schema";
+import { CartDocument } from "../database/mongo/schema/cart.schema";
 import { Model, Types } from "mongoose";
-import { UUID } from "crypto";
 
 @Injectable()
 export class CartService {
     constructor(
         @Inject('CART_MODEL')
-        private cartModel: Model<Cart>,
+        private cartModel: Model<CartDocument>,
     ) {}
 
     getAllCart() {
@@ -24,7 +23,7 @@ export class CartService {
         return newCart.save();
     }
 
-    uuidToObjectId(uuid: string): Types.ObjectId {
+    private uuidToObjectId(uuid: string): Types.ObjectId {
         const buffer = Buffer.from(uuid.replace(/-/g, ''), 'hex');
         return new Types.ObjectId(buffer);
     }
