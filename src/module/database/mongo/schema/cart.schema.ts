@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import mongoose, { Document, Types } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Cart extends Document {
@@ -19,3 +19,4 @@ export class Cart extends Document {
 }
 
 export const CartSchema = SchemaFactory.createForClass(Cart);
+export const CartModel = mongoose.model<Cart>('Cart', CartSchema);

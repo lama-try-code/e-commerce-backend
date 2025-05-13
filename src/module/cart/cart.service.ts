@@ -1,24 +1,31 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
+import { Cart } from "../database/mongo/schema/cart.schema";
+import { Model, Types } from "mongoose";
+import { UUID } from "crypto";
 
 @Injectable()
 export class CartService {
     constructor(
-        // @Inject('CART_REPOSITORY')
-        // private cartRepository: Repository<Cart>,
+        @Inject('CART_MODEL')
+        private cartModel: Model<Cart>,
     ) {}
 
     getAllCart() {
-        // return this.cartRepository.find();
-        return [];
+        return this.cartModel.find().exec();
     }
 
-    getCartById(id: string) {
-        // return this.cartRepository.findOne({ where: { id } });
-        return null;
+    getCartByUserId(userId: string) {
+        return this.cartModel.findById(userId).exec();
     }
 
-    createCart(cart: any) {
-        // return this.cartRepository.save(cart);
-        return null;
+    createCart(userId: string) {
+        const newCart = new this.cartModel();
+        newCart.userId = this.uuidToObjectId(userId);
+        return newCart.save();
+    }
+
+    uuidToObjectId(uuid: string): Types.ObjectId {
+        const buffer = Buffer.from(uuid.replace(/-/g, ''), 'hex');
+        return new Types.ObjectId(buffer);
     }
 }
