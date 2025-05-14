@@ -5,7 +5,7 @@ import { AuthService } from "./auth.service";
 import { CreateUserDto } from "../user/dto/create-user.dto";
 import { SignInUserDto } from "./dto/signin-user.dto";
 
-@ApiTags("auth")
+@ApiTags("Auth")
 @Controller("auth")
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
@@ -13,12 +13,12 @@ export class AuthController {
     @Post("signup")
     @ApiBody({ type: CreateUserDto })
     async signUp(@Body() createUserDto: CreateUserDto) {
-        return this.authService.signUp(createUserDto);
+        return await this.authService.signUp(createUserDto);
     }
 
     @Post('signin')
     @ApiBody({ type: SignInUserDto })
     async signIn(@Body() signInUserDto: SignInUserDto) {
-        return this.authService.signIn(signInUserDto.email, signInUserDto.password);
+        return await this.authService.signIn(signInUserDto.email, signInUserDto.password);
     }
 }

@@ -1,7 +1,11 @@
-import { Controller, Get, Param, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Put, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { CartService } from "./cart.service";
-import { JwtAuthGuard } from "../auth/jwt.guard";
+import { JwtAuthGuard } from "../../common/guards/jwt.guard";
+import { AddProductToCartDto } from "../product/dto/add-product-to-cart.dto";
+import { Role } from "src/common/constants/role.enum";
+import { Roles } from "src/common/decorators/roles.decorator";
+import { RolesGuard } from "../../common/guards/role.guard";
 
 @ApiTags('Cart')
 @Controller('cart')
@@ -14,9 +18,18 @@ export class CartController {
     }
 
     @Get(':id')
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(Role.CUSTOMER)
     @ApiBearerAuth('JWT')
     async getCartByUserId(@Param('id') id: string) {
-        return this.cartService.getCartByUserId(id);
+        return await this.cartService.getCartByUserId(id);
+    }
+
+    @Put(':id')
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(Role.CUSTOMER)
+    @ApiBearerAuth('JWT')
+    async addProductToCart(@Param('id') id: string, @Body() addProductToCartDto: AddProductToCartDto) {
+        return await this.cartService.addProductToCart(id, addProductToCartDto);
     }
 }
