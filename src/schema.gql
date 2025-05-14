@@ -1,0 +1,17 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Product {
+  id: String!
+  name: String!
+  description: String!
+  isActive: Boolean!
+  price: Float!
+  quantity: Int!
+  status: String!
+}
+
+type Query {
+  getProducts: [Product!]!
+}

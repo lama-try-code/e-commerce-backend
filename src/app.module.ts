@@ -7,6 +7,7 @@ import { UserModule } from './module/user/user.module';
 import { AuthModule } from './module/auth/auth.module';
 import { CartModule } from './module/cart/cart.module';
 import { GraphqlModule } from './module/graphql/graphql.module';
+import { ProductModule } from './module/product/product.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { GraphqlModule } from './module/graphql/graphql.module';
     AuthModule,
     CartModule,
     GraphqlModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],
