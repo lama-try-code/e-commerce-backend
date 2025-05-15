@@ -2,7 +2,8 @@ import { IsBoolean, IsInt, IsString } from "class-validator";
 import { UUID } from "crypto";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { OrderDetail } from "./orderdetail.entity";
-import { Field, Float, Int, ObjectType } from "@nestjs/graphql";
+import { createUnionType, Field, Float, Int, ObjectType } from "@nestjs/graphql";
+import { ProductStatus } from "src/common/constants/product-status.enum";
 
 @ObjectType()
 @Entity('products')
@@ -35,9 +36,10 @@ export class Product {
     @Field(() => Int)
     quantity: number;
 
-    @Column({default: 'OUT_OF_STOCK'})
-    @Field(() => String)
-    status: string;
+    //this is how you set a enum type in typeorm
+    @Column({type: 'enum', enum: ProductStatus, default: ProductStatus.IN_STOCK})
+    @Field(() => ProductStatus)
+    status: ProductStatus;
 
     @OneToMany(() => OrderDetail, (orderDetail) => orderDetail.product)
     orderDetails: OrderDetail[];
