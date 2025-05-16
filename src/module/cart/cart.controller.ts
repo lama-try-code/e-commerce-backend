@@ -12,11 +12,6 @@ import { RolesGuard } from "../../common/guards/role.guard";
 export class CartController {
     constructor(private readonly cartService: CartService){}
 
-    @Get()
-    async getAllCart() {
-        return this.cartService.getAllCart();
-    }
-
     @Get(':id')
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(Role.CUSTOMER)

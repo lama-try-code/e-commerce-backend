@@ -29,7 +29,9 @@ async function bootstrap() {
     preflightContinue: false,
   });
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalGuards(new JwtAuthGuard());
+  //this shit is use for the whole application
+  //please remember when you should use it or not 
+  //app.useGlobalGuards(new JwtAuthGuard());
   await app.listen(process.env.PORT ?? 5000);
 }
 bootstrap();
