@@ -8,6 +8,7 @@ import { AuthModule } from './module/auth/auth.module';
 import { CartModule } from './module/cart/cart.module';
 import { GraphqlModule } from './module/graphql/graphql.module';
 import { ProductModule } from './module/product/product.module';
+import { GoogleModule } from './module/social-auth/google/google.module';
 
 @Module({
   imports: [
@@ -16,8 +17,9 @@ import { ProductModule } from './module/product/product.module';
       isGlobal: true, 
     }),
     DatabaseModule,
-    UserModule,
     AuthModule,
+    GoogleModule,
+    UserModule,
     CartModule,
     GraphqlModule,
     ProductModule,

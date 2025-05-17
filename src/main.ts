@@ -25,6 +25,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, documentFactory());
   app.enableCors({
     origin: '*',
+    Credential: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
   });
