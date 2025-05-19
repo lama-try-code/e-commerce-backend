@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Product } from "../database/postgres/entities/product.entity";
-import { Repository } from "typeorm";
+import { Repository, MoreThan } from "typeorm";
 import { CreateProductDto } from "./dto/create-product.dto";
 import { UUID } from "crypto";
 
@@ -22,5 +22,9 @@ export class ProductService {
     async createProduct(CreateProductDto: CreateProductDto): Promise<Product> {
         const product = this.productRepository.create(CreateProductDto);
         return this.productRepository.save(product);
+    }
+
+    async findAvailable() {
+        return this.productRepository.find({ where: { quantity: MoreThan(0) } });
     }
 }

@@ -9,6 +9,7 @@ import { CartModule } from './module/cart/cart.module';
 import { GraphqlModule } from './module/graphql/graphql.module';
 import { ProductModule } from './module/product/product.module';
 import { GoogleModule } from './module/social-auth/google/google.module';
+import { CronModule } from './module/cron/cron.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { GoogleModule } from './module/social-auth/google/google.module';
     CartModule,
     GraphqlModule,
     ProductModule,
+    CronModule,
   ],
   controllers: [AppController],
   providers: [AppService],

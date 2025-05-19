@@ -10,7 +10,8 @@ import { DatabaseModule } from "../database/database.module";
         ...ProductProviders, 
         ProductService,
         ProductResolver,
-    ]
+    ],
+    exports: [...ProductProviders, ProductService]
 })
 
 export class ProductModule {}
