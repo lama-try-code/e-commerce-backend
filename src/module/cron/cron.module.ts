@@ -21,7 +21,11 @@ import { productsQueueEventProvider } from "./cron.provider";
         ScheduleModule.forRoot(),
         ProductModule
     ],
-    providers: [CronScheduler, ProductsConsumer, productsQueueEventProvider]
+    providers: [
+        //main scheduler, use for setting times to each consumer
+        CronScheduler, 
+        ProductsConsumer, 
+        productsQueueEventProvider]
 })
 
 export class CronModule { }
